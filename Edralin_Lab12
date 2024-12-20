@@ -1,0 +1,50 @@
+def display_menu():
+    menu = {
+        1: ("Milktea", 5.00),
+        2: ("Menudo", 8.50),
+        3: ("Spaghetti", 7.00),
+        4: ("Salad", 4.00),
+        5: ("Juice", 2.00)
+    }
+    
+    print("---- Menu ----")
+    for item_number, (item_name, item_price) in menu.items():
+        print(f"{item_number}. {item_name} - ${item_price:.2f}")
+    print("----------------")
+    
+    return menu
+
+def get_order(menu):
+    while True:
+        try:
+            choice = int(input("Please select a menu item by entering the item number: "))
+            if choice in menu:
+                item_name, item_price = menu[choice]
+                print(f"You selected: {item_name} for ${item_price:.2f}")
+                return item_name, item_price
+            else:
+                print("Invalid selection. Please choose a valid menu item.")
+        except ValueError:
+            print("Invalid input. Please enter a number corresponding to a menu item.")
+
+def process_payment(total_cost):
+    while True:
+        try:
+            cash = float(input(f"Your total is ${total_cost:.2f}. Please enter cash rendered: $"))
+            if cash >= total_cost:
+                change = cash - total_cost
+                print(f"Payment successful! Your change is: ${change:.2f}")
+                return
+            else:
+                print(f"Insufficient funds. You still owe ${total_cost - cash:.2f}. Please provide the remaining amount.")
+        except ValueError:
+            print("Invalid input. Please enter a valid amount of cash.")
+
+def main():
+    menu = display_menu()
+    item_name, item_price = get_order(menu)
+    total_cost = item_price
+    process_payment(total_cost)
+
+if __name__ == "__main__":
+    main()
